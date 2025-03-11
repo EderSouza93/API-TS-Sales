@@ -24,5 +24,5 @@ export class Product {
   created_at: Date;
 
   @UpdateDateColumn({ type: 'timestamp' })
-  update_at: Date;
+  updated_at: Date;
 }

@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 import 'reflect-metadata';
 import 'express-async-errors';
 import express from 'express';
 import cors from 'cors';
+import { errors } from 'celebrate';
 
 import routes from './routes';
 import ErrorHandleMiddleware from '@shared/middlewares/ErrorHandleMiddleware';
@@ -15,7 +17,17 @@ AppDataSource.initialize()
     app.use(express.json());
 
     app.use(routes);
-    app.use(ErrorHandleMiddleware.handleError);
+    app.use(errors());
+    app.use(
+      (
+        error: Error,
+        req: express.Request,
+        res: express.Response,
+        next: express.NextFunction,
+      ) => {
+        ErrorHandleMiddleware.handleError(error, req, res, next);
+      },
+    );
 
     console.log('Connected to the database!');
 
