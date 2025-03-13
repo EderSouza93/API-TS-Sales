@@ -11,21 +11,21 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'text' })
+  @Column()
   name: string;
 
-  @Column({ type: 'text' })
+  @Column()
   email: string;
 
-  @Column({ type: 'text' })
+  @Column()
   password: string;
 
-  @Column({ type: 'text' })
+  @Column()
   avatar: string;
 
-  @CreateDateColumn({ type: 'timestamp' })
+  @CreateDateColumn()
   created_at: Date;
 
-  @UpdateDateColumn({ type: 'timestamp' })
+  @UpdateDateColumn()
   updated_at: Date;
 }

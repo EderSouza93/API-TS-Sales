@@ -9,7 +9,6 @@ interface IForgotPassword {
 export default class SendForgotPasswordEmailService {
   async execute({ email }: IForgotPassword): Promise<void> {
     const user = await usersRepositories.findByEmail(email);
-
     if (!user) {
       throw new AppError('User not found.', 404);
     }
