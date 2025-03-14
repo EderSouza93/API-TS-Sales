@@ -8,6 +8,6 @@ const profileController = new ProfileController();
 
 profileRouter.use(AuthMiddleware.execute);
 profileRouter.get('/', profileController.show);
-profileRouter.get('/', UpdateUserSchema, profileController.update);
+profileRouter.patch('/', UpdateUserSchema, profileController.update);
 
 export default profileRouter;
