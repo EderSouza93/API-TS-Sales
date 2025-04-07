@@ -1,11 +1,7 @@
 import AppError from '@shared/errors/AppError';
-import { customerRepository } from '../database/repositories/CustomerRepositories';
-import { Customer } from '../database/entities/Custumer';
-
-interface ICreateCustomer {
-  name: string;
-  email: string;
-}
+import { customerRepository } from '../infra/database/repositories/CustomerRepositories';
+import { Customer } from '../infra/database/entities/Custumer';
+import { ICreateCustomer } from '../domain/models/ICreateUser';
 
 export default class CreateCustomerService {
   public async execute({ name, email }: ICreateCustomer): Promise<Customer> {

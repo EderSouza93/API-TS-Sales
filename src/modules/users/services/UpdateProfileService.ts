@@ -1,5 +1,5 @@
-import { User } from '@modules/users/database/entities/User';
-import { usersRepositories } from '@modules/users/database/repositories/UsersRepositories';
+import { User } from '@modules/users/infra/database/entities/User';
+import { usersRepositories } from '@modules/users/infra/database/repositories/UsersRepositories';
 import AppError from '@shared/errors/AppError';
 import { compare, hash } from 'bcrypt';
 
