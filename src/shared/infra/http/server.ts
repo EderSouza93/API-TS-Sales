@@ -4,6 +4,7 @@ import 'express-async-errors';
 import express from 'express';
 import cors from 'cors';
 import { errors } from 'celebrate';
+import '@shared/container';
 
 import { AppDataSource } from '../typeorm/data-source';
 import rateLimiter from '@shared/middlewares/rateLimiter';

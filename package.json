@@ -53,6 +53,7 @@
     "rate-limiter-flexible": "^6.2.0",
     "redis": "^4.7.0",
     "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.4.0",
     "typeorm": "^0.3.21"
   }
 }
