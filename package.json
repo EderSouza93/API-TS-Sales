@@ -8,8 +8,9 @@
     "lint-fix": "eslint . --ext .ts --fix",
     "migration:create": "cross-env MIGRATION_NAME=$npm_config_name ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:create src/shared/infra/typeorm/migrations/$npm_config_name",
     "migration:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d ./src/shared/infra/typeorm/data-source.ts",
-    "simple-test": "jest --no-coverage",
-    "test": "jest"
+    "test": "cross-env NODE_ENV=test jest --no-coverage",
+    "teste:coverage": "cross-env NODE_ENV=test jest --coverage",
+    "migration:run:test": "cross-env NODE_ENV=test ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run -d ./src/shared/infra/typeorm/data-source.ts"
   },
   "keywords": [],
   "author": "Eder Souza",
