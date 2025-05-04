@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { IUsersRepository } from '../IUserRepositories';
 import { IUser } from '../../models/IUser';
 import { IPaginateUser } from '../../models/IPaginateUser';

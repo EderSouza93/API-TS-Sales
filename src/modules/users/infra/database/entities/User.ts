@@ -33,7 +33,10 @@ export class User {
 
   @Expose({ name: 'avatar_url' })
   getAvatarUrl(): string | null {
-    if (!this.avatar) return null;
+    if (!this.avatar) {
+      return null;
+    }
+
     return `${process.env.APP_API_URL}/files/${this.avatar}`;
   }
 }

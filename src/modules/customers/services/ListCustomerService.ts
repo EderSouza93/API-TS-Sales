@@ -1,13 +1,18 @@
-import { IPagination } from '@shared/interfaces/pagination.interface';
-import { Customer } from '../infra/database/entities/Custumer';
-import { ICustomersRepositories } from '../domain/repositories/ICustomersRepositories';
+import { ICustomersRepository } from '../domain/repositories/ICustomersRepositories';
+import { inject, injectable } from 'tsyringe';
+import { IPaginateCustomer } from '../domain/models/IPaginationCustomer';
 
+@injectable()
 export default class ListCustomerSevice {
-  constructor(private readonly customerRepository: ICustomersRepositories) {}
+  constructor(
+    @inject('CustomerRepository')
+    private customerRepository: ICustomersRepository,
+  ) {}
+
   async execute(
     page: number = 1,
     limit: number = 10,
-  ): Promise<IPagination<Customer>> {
+  ): Promise<IPaginateCustomer> {
     const [data, total] = await this.customerRepository.findAndCount({
       take: limit,
       skip: (page - 1) * limit,
@@ -23,6 +28,6 @@ export default class ListCustomerSevice {
       total_pages: totalPages,
       next_page: page < totalPages ? page + 1 : null,
       prev_page: page > 1 ? page - 1 : null,
-    } as IPagination<Customer>;
+    } as IPaginateCustomer;
   }
 }

@@ -7,9 +7,9 @@ import { errors } from 'celebrate';
 import '@shared/container';
 
 import { AppDataSource } from '../typeorm/data-source';
-import rateLimiter from '@shared/middlewares/rateLimiter';
+import rateLimiter from '@shared/infra/http/middlewares/rateLimiter';
 import routes from './routes';
-import ErrorHandleMiddleware from '@shared/middlewares/ErrorHandleMiddleware';
+import ErrorHandleMiddleware from '@shared/infra/http/middlewares/ErrorHandleMiddleware';
 
 const startServer = async () => {
   await AppDataSource.initialize();
@@ -33,7 +33,7 @@ const startServer = async () => {
     },
   );
 
-  console.log('Connected to the database!');
+  console.log('Connected to the database! 🎉');
 
   return app;
 };
@@ -41,7 +41,7 @@ const startServer = async () => {
 export default startServer()
   .then(app => {
     return app.listen(3333, () => {
-      console.log('Server started on port 3333!');
+      console.log('Server started on port 3333! 🏆');
     });
   })
   .catch(error => {

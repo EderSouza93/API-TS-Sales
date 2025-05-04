@@ -1,11 +1,10 @@
-import { Customer } from '@modules/customers/infra/database/entities/Custumer';
-import { ICreateCustomer } from '../../models/ICreateUser';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { ICreateCustomer } from '../../models/ICreateCustomer';
 import { ICustomer } from '@modules/customers/domain/models/ICustomer';
-import { ICustomersRepositories, Pagination } from '../ICustomersRepositories';
+import Customer from '@modules/customers/infra/database/entities/Custumer';
+import { ICustomersRepository, Pagination } from '../ICustomersRepositories';
 
-export default class FakeCustomerRepositories
-  implements ICustomersRepositories
-{
+export default class FakeCustomerRepositories implements ICustomersRepository {
   private customers: Customer[] = [];
 
   public async create({ name, email }: ICreateCustomer): Promise<ICustomer> {
