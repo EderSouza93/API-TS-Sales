@@ -1,1 +1,1 @@
-export const customerMock = { name: 'John Doe', email: 'john@gmail.com' };
+export const customerMock = { name: 'John Doe', email: 'john@example.com' };
