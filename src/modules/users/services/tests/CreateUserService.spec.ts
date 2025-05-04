@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 import 'reflect-metadata';
-import FakeUserRepository from '../domain/repositories/fakes/FakeUserRepositories';
-import CreateUserService from './CreateUserService';
+import FakeUserRepository from '../../domain/repositories/fakes/FakeUserRepositories';
+import CreateUserService from '../CreateUserService';
 import { hash } from 'bcrypt';
 import AppError from '@shared/errors/AppError';
 

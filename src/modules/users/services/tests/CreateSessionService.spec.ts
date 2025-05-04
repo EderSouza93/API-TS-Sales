@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 import 'reflect-metadata';
 import AppError from '@shared/errors/AppError';
-import { User } from '../infra/database/entities/User';
-import FakeUserRepository from '../domain/repositories/fakes/FakeUserRepositories';
-import CreateSessionsService from './CreateSessionService';
+import { User } from '../../infra/database/entities/User';
+import FakeUserRepository from '../../domain/repositories/fakes/FakeUserRepositories';
+import CreateSessionsService from '../CreateSessionService';
 
 jest.mock('bcrypt', () => ({
   compare: jest.fn(),

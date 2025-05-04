@@ -13,6 +13,8 @@ export default class FakeCustomerRepositories implements ICustomersRepository {
     customer.id = this.customers.length + 1;
     customer.name = name;
     customer.email = email;
+    customer.created_at = new Date();
+    customer.updated_at = new Date();
 
     this.customers.push(customer);
 
@@ -55,7 +57,14 @@ export default class FakeCustomerRepositories implements ICustomersRepository {
     return customer as Customer | null;
   }
 
-  findAndCount(pagination: Pagination): Promise<[ICustomer[], number]> {
-    throw new Error('Method not implemented.');
+  public async findAndCount(
+    pagination: Pagination,
+  ): Promise<[ICustomer[], number]> {
+    const { take, skip } = pagination;
+
+    const paginatedCustomers = this.customers.slice(skip, skip + take);
+    const total = this.customers.length;
+
+    return [paginatedCustomers, total];
   }
 }

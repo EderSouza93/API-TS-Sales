@@ -1,7 +1,7 @@
 import AppError from '@shared/errors/AppError';
-import { customerMock } from '../domain/factories/customerFactory';
-import FakeCustomerRepositories from '../domain/repositories/fakes/FakeCustomerRepositories';
-import CreateCustomerService from './CreateCustomersService';
+import { customerMock } from '../../domain/factories/customerFactory';
+import FakeCustomerRepositories from '../../domain/repositories/fakes/FakeCustomerRepositories';
+import CreateCustomerService from '../CreateCustomersService';
 
 let fakeCustomerRepository: FakeCustomerRepositories;
 let createCustomer: CreateCustomerService;
