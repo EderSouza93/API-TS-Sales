@@ -1,14 +1,20 @@
-import { User } from '@modules/users/infra/database/entities/User';
-import { usersRepositories } from '@modules/users/infra/database/repositories/UsersRepositories';
 import AppError from '@shared/errors/AppError';
 
-interface IShowProfile {
+import { IUsersRepository } from '../domain/repositories/IUserRepositories';
+import { inject } from 'tsyringe';
+import { User } from '../infra/database/entities/User';
+
+interface IRequest {
   user_id: number;
 }
 
-export default class ShowProfileService {
-  async execute({ user_id }: IShowProfile): Promise<User> {
-    const user = await usersRepositories.findById(user_id);
+class ShowProfileService {
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
+  ) {}
+  public async execute({ user_id }: IRequest): Promise<User> {
+    const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
       throw new AppError('User not found.', 404);
@@ -17,3 +23,5 @@ export default class ShowProfileService {
     return user;
   }
 }
+
+export default ShowProfileService;

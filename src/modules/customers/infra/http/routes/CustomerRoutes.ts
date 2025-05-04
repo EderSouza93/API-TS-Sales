@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import CustomersControllers from '../controllers/CustomersControllers';
-import AuthMiddleware from '@shared/middlewares/authMiddleware';
+import AuthMiddleware from '@shared/infra/http/middlewares/authMiddleware';
 import {
   createCustomerSchema,
   idParamsValidate,

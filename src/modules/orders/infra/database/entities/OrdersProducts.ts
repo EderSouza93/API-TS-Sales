@@ -7,11 +7,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Order } from './Order';
+import Order from './Order';
 import { Product } from '@modules/products/infra/database/entities/Product';
 
 @Entity('orders_products')
-export class OrdersProducts {
+class OrdersProducts {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -19,15 +19,15 @@ export class OrdersProducts {
   @JoinColumn({ name: 'order_id' })
   order: Order;
 
-  @Column()
-  order_id: string;
-
   @ManyToOne(() => Product, product => product.order_products)
   @JoinColumn({ name: 'product_id' })
   product: Product;
 
   @Column()
-  product_id: string;
+  order_id: number;
+
+  @Column()
+  product_id: number;
 
   @Column('decimal')
   price: number;
@@ -41,3 +41,5 @@ export class OrdersProducts {
   @UpdateDateColumn()
   updated_at: Date;
 }
+
+export default OrdersProducts;

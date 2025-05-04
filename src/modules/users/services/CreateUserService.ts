@@ -1,32 +1,38 @@
 import AppError from '@shared/errors/AppError';
-import { User } from '../infra/database/entities/User';
-import { usersRepositories } from '../infra/database/repositories/UsersRepositories';
 import { hash } from 'bcrypt';
+import { IUsersRepository } from '../domain/repositories/IUserRepositories';
+import { inject, injectable } from 'tsyringe';
+import 'reflect-metadata';
+import { User } from '../infra/database/entities/User';
 
-interface ICreateUser {
+interface IRequest {
   name: string;
   email: string;
   password: string;
 }
-
-export default class CreateUserService {
-  async execute({ name, email, password }: ICreateUser): Promise<User> {
-    const emailExists = await usersRepositories.findByEmail(email);
+@injectable()
+class CreateUserService {
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
+  ) {}
+  public async execute({ name, email, password }: IRequest): Promise<User> {
+    const emailExists = await this.usersRepository.findByEmail(email);
 
     if (emailExists) {
       throw new AppError('Email address already used.', 409);
     }
 
-    const hashedPassword = await hash(password, 10);
+    const hashedPassword = await hash(password, 8);
 
-    const user = usersRepositories.create({
+    const user = await this.usersRepository.create({
       name,
       email,
       password: hashedPassword,
     });
 
-    await usersRepositories.save(user);
-
     return user;
   }
 }
+
+export default CreateUserService;

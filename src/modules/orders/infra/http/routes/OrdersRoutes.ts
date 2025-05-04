@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import OrderController from '../controllers/OrdersControllers';
-import AuthMiddleware from '@shared/middlewares/authMiddleware';
+import AuthMiddleware from '@shared/infra/http/middlewares/authMiddleware';
 import { idParamsValidation } from '@modules/products/infra/http/schemas/ProductSchemas';
 import { createOrderValidate } from '../schemas/OrdersSchemas';
 

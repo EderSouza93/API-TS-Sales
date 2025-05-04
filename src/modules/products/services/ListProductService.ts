@@ -1,17 +1,23 @@
 import RedisCache from '@shared/cache/RedisCache';
-import { Product } from '../infra/database/entities/Product';
-import { productsRepositories } from '../infra/database/repositories/ProductsRepositories';
-
+import { IProductsRepository } from '../domain/repositories/IProductsRepository';
+import { inject, injectable } from 'tsyringe';
+import { SearchParams } from '@modules/users/infra/database/repositories/UsersRepository';
+import { IProductPaginate } from '../domain/models/IProductPaginate';
+@injectable()
 export default class ListProductService {
-  async execute(): Promise<Product[]> {
+  constructor(
+    @inject('ProductsRepository')
+    private productsRepository: IProductsRepository,
+  ) {}
+  async execute({ page, skip, take }: SearchParams): Promise<IProductPaginate> {
     const redisCache = new RedisCache();
 
-    let products = await redisCache.recover<Product[]>(
+    let products = await redisCache.recover<IProductPaginate>(
       'api-mysales-PRODUCT_LIST',
     );
 
     if (!products) {
-      products = await productsRepositories.find();
+      products = await this.productsRepository.findAll({ page, skip, take });
 
       await redisCache.save(
         'api-mysales-PRODUCT_LIST',
@@ -19,6 +25,6 @@ export default class ListProductService {
       );
     }
 
-    return products;
+    return products as IProductPaginate;
   }
 }

@@ -1,31 +1,37 @@
-import { User } from '@modules/users/infra/database/entities/User';
-import { usersRepositories } from '@modules/users/infra/database/repositories/UsersRepositories';
 import AppError from '@shared/errors/AppError';
 import { compare, hash } from 'bcrypt';
+import { User } from '../infra/database/entities/User';
+import { inject, injectable } from 'tsyringe';
+import { IUsersRepository } from '../domain/repositories/IUserRepositories';
 
-interface IUpdateProfile {
+interface IRequest {
   user_id: number;
   name: string;
   email: string;
   password?: string;
   old_password?: string;
 }
-export default class UpdateProfileService {
-  async execute({
+@injectable()
+class UpdateProfileService {
+  constructor(
+    @inject('UsersRepository')
+    private usersRepository: IUsersRepository,
+  ) {}
+  public async execute({
     user_id,
     name,
     email,
     password,
     old_password,
-  }: IUpdateProfile): Promise<User> {
-    const user = await usersRepositories.findById(user_id);
+  }: IRequest): Promise<User> {
+    const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
-      throw new AppError('User not found.', 404);
+      throw new AppError('User not found.');
     }
 
     if (email) {
-      const userUpdateEmail = await usersRepositories.findByEmail(email);
+      const userUpdateEmail = await this.usersRepository.findByEmail(email);
 
       if (userUpdateEmail) {
         throw new AppError('There is already one user with this email.', 409);
@@ -45,15 +51,17 @@ export default class UpdateProfileService {
         throw new AppError('Old password does not match.');
       }
 
-      user.password = await hash(password, 10);
+      user.password = await hash(password, 8);
     }
 
     if (name) {
       user.name = name;
     }
 
-    await usersRepositories.save(user);
+    await this.usersRepository.save(user);
 
     return user;
   }
 }
+
+export default UpdateProfileService;

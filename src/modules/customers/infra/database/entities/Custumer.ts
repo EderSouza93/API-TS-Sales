@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 
 @Entity('customers')
-export class Customer implements ICustomer {
+export default class Customer implements ICustomer {
   @PrimaryGeneratedColumn()
   id: number;
 
