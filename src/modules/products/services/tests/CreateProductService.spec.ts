@@ -1,7 +1,10 @@
 import { productMock } from '@modules/products/domain/factories/productFactory';
 import FakeProductRepositories from '@modules/products/domain/repositories/fakes/FakeProductRepositories';
+import RedisCache from '@shared/cache/RedisCache';
 import AppError from '@shared/errors/AppError';
 import { CreateProductService } from '../CreateProductService';
+
+jest.mock('@shared/cache/RedisCache');
 
 let fakeProductRepository: FakeProductRepositories;
 let createProduct: CreateProductService;
@@ -26,5 +29,13 @@ describe('CreateProductService', () => {
     await expect(
       createProduct.execute({ ...productMock }),
     ).rejects.toBeInstanceOf(AppError);
+  });
+
+  it('sould be to invalidate the cache when a new product is created', async () => {
+    const invalidateSpy = jest.spyOn(RedisCache.prototype, 'invalidate');
+
+    await createProduct.execute({ ...productMock });
+
+    expect(invalidateSpy).toHaveBeenLastCalledWith('api-mysales-PRODUCT_LIST');
   });
 });
