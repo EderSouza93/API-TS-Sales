@@ -16,9 +16,9 @@ describe('CreateProductService', () => {
     const product = await createProduct.execute({ ...productMock });
 
     expect(product).toHaveProperty('id');
-    expect(product.name).toBe('Product X');
-    expect(product.price).toBe(500);
-    expect(product.quantity).toBe(200);
+    expect(product.name).toBe('PlayStation 5');
+    expect(product.price).toBe(5000.99);
+    expect(product.quantity).toBe(500);
   });
 
   it('should not be able to create a new product with name is already in use', async () => {

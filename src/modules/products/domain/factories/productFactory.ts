@@ -1,1 +1,5 @@
-export const productMock = { name: 'Product X', price: 500, quantity: 200 };
+export const productMock = {
+  name: 'PlayStation 5',
+  price: 5000.99,
+  quantity: 500,
+};
