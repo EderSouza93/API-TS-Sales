@@ -43,7 +43,7 @@ class FakeUserRepository implements IUsersRepository {
     }
   }
 
-  findAll({
+  public async findAll({
     page,
     skip,
     take,
@@ -52,13 +52,27 @@ class FakeUserRepository implements IUsersRepository {
     skip: number;
     take: number;
   }): Promise<IPaginateUser> {
-    throw new Error('Method not implemented.');
+    const startIndex = skip;
+    const endIndex = skip + take;
+    const data = this.users.slice(startIndex, endIndex);
+
+    const paginatedResult: IPaginateUser = {
+      data,
+      total: this.users.length,
+      current_page: page,
+      per_page: take,
+    };
+
+    return paginatedResult;
   }
   findByName(name: string): Promise<IUser | null> {
-    throw new Error('Method not implemented.');
+    return Promise.resolve(
+      this.users.find(user => user.name === name) as IUser,
+    );
   }
+
   findById(id: number): Promise<IUser | null> {
-    throw new Error('Method not implemented.');
+    return Promise.resolve(this.users.find(user => user.id === id) as IUser);
   }
 }
 

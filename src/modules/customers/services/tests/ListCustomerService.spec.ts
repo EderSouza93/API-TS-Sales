@@ -16,8 +16,8 @@ describe('ListCustomerService', () => {
   it('should be able to return paginated list of customers', async () => {
     for (let i = 0; i < 15; i++) {
       await createCustomerService.execute({
-        name: `User ${i + 1}`,
-        email: `user${i + 1}@example.com`,
+        name: `Customer ${i + 1}`,
+        email: `Customer${i + 1}@example.com`,
       });
     }
 
