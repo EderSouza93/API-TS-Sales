@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import AppError from '@shared/errors/AppError';
 import path from 'path';
 import uploadConfig from '@config/upload';
@@ -25,14 +26,16 @@ class UpdateUserAvatarService {
 
     if (user.avatar) {
       const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
-      const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
 
-      if (userAvatarFileExists) {
+      try {
+        await fs.promises.stat(userAvatarFilePath);
         await fs.promises.unlink(userAvatarFilePath);
+      } catch (error) {
+        console.error(error);
       }
     }
 
-    user.avatar = avatarFileName;
+    user.avatar = avatarFileName || '';
 
     await this.usersRepository.save(user);
 

@@ -62,8 +62,7 @@ describe('ResetPasswordService', () => {
   });
 
   it('should not be able to reset password with non-existing user', async () => {
-    // Vamos criar um token, mas sem um usuário válido associado
-    const { token } = await fakeUserTokensRepository.generate(999); // ID inexistente
+    const { token } = await fakeUserTokensRepository.generate(999);
 
     await expect(
       resetPasswordService.execute({
@@ -74,17 +73,14 @@ describe('ResetPasswordService', () => {
   });
 
   it('should not be able to reset password if token is expired', async () => {
-    // Criar um usuário
     const user = await fakeUserRepository.create({
       name: 'John Doe',
       email: 'johndoe@example.com',
       password: '123456',
     });
 
-    // Gerar token de reset
     const { token } = await fakeUserTokensRepository.generate(user.id);
 
-    // Mock da data atual para simular um token expirado (3 horas depois)
     jest.spyOn(Date, 'now').mockImplementationOnce(() => {
       const tokenDate = new Date();
       return addHours(tokenDate, 3).getTime();
